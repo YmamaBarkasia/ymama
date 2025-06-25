@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>صفحة الطالب</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+
+  .container {
+    width: 100%;
+    max-width: 100%;
+    min-width: auto;
+    box-sizing: border-box;
+    padding: 40px;
+    margin: 0 auto;
+    display: block;
+    flex-direction: column;
+    gap: 20px;
+    border: 1px solid white;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(33, 51, 184, 0.4);
+    text-align: right;
+  }
+    
+    .pass { color: green; }
+    .fail { color: red; }
+    .sidebar {
+      width: 220px;
+      background-color: #092847;
+      height: 100vh;
+      padding-top: 20px;
+    }
+
+    .sidebar li {
+      cursor: pointer;
+      color: white;
+    }
+
+    .sidebar li.active {
+      background-color: white !important;
+      color: #001f3f !important;
+      font-weight: bold;
+    }
+
+    .section { display: none; }
+    .section.active { display: block; }
+    .img-logo {
+      background-color: #092847;
+      border: none;
+    }
+
+   /* الوضع الليلي */
+    body.dark-mode {
+      background-color: #121212;
+      color: #f1f1f1;
+    }
+
+    body.dark-mode .container {
+      background-color: #1e1e1e;
+      box-shadow: 0 10px 20px rgba(255, 255, 255, 0.1);
+    }
+
+    body.dark-mode .table {
+      color: #fff;
+    }
+
+    body.dark-mode .table thead {
+      background-color: #2c2c2c;
+    }
+
+    body.dark-mode .sidebar {
+      background-color: #1a1a1a;
+    }
+
+    body.dark-mode .sidebar li.active {
+      background-color: #f1f1f1 !important;
+      color: #1a1a1a !important;
+    }
+
+    body.dark-mode .card {
+      background-color: #2a2a2a;
+      border-color: #444;
+    }
+    body.dark-mode .img-logo {
+      background-color: #1a1a1a;
+
+    }
+
+    body.dark-mode .btn-outline-primary {
+      border-color: #bbb;
+      color: #bbb;
+    }
+    body.dark-mode .btn-outline-primary:hover {
+      background-color: #444;
+    }
+
+    .toggle-dark {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      z-index: 9999;
+      font-size: 22px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      color: #092847;
+    }
+
+    body.dark-mode .toggle-dark {
+      color: #f1f1f1;
+    }
+
+  </style>
+</head>
+<body class="d-flex">
+
+  <!-- القائمة الجانبية -->
+  <div class="sidebar border-end">
+    <ul class="nav flex-column">
+      <li class="nav-item px-3 py-2 active" onclick="showSection('results', this)">النتائج</li>
+      <li class="nav-item px-3 py-2" onclick="showSection('assignments', this)">الوظائف</li>
+      <li class="nav-item px-3 py-2" onclick="showSection('exams', this)">النماذج الامتحانية</li>
+      <li class="nav-item px-3 py-2" onclick="showSection('notes', this)">الملاحظات</li>
+    </ul>
+
+      <div class="dark">
+        <button class="toggle-dark" onclick="toggleDarkMode()">
+        <i id="darkIcon" class="fas fa-moon"></i>
+      </button>
+      </div>
+
+    <div class="img">
+      <img src="assest/logo/Picsart_25-06-02_23-14-09-145.png" class="img-thumbnail img-logo">
+    </div>
+  </div>
+
+  <!-- المحتوى -->
+  <div class="flex-fill p-4">
+
+    <!-- قسم النتائج -->
+    <div id="results" class="section active">
+      <div class="container">
+        <h3 class="mb-4">يمامة بركسية</h3>
+        <table class="table">
+          <thead class="table-light">
+            <tr>
+              <th>اسم المادة</th>
+              <th>النشاط</th>
+              <th>الوظائف</th>
+              <th>المذاكرة</th>
+              <th>الحالة</th>
+              <th>الامتحان</th>
+              <th>الحالة</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>الرياضيات</td>
+              <td>85</td>
+              <td></td>
+              <td class="mark">50</td>
+              <td class="status"></td>
+              <td class="mark">60</td>
+              <td class="status"></td>
+            </tr>
+            <tr>
+              <td>الرياضيات</td>
+              <td>85</td>
+              <td></td>
+              <td class="mark">40</td>
+              <td class="status"></td>
+              <td class="mark">35</td>
+              <td class="status"></td>
+            </tr>
+            <tr>
+              <td>الرياضيات</td>
+              <td>85</td>
+              <td></td>
+              <td class="mark"></td>
+              <td class="status"></td>
+              <td class="mark"></td>
+              <td class="status"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- قسم الوظائف -->
+    <div id="assignments" class="section">
+      <div class="container">
+        <ul class="nav nav-tabs" id="tabs" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#tab1" type="button">رفع الوظيفة</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab2" type="button">وظائف الأستاذ</button>
+          </li>
+        </ul>
+        <div class="tab-content mt-3">
+          <div class="tab-pane fade show active" id="tab1">
+  <h3 class="mb-4">رفع الوظيفة </h3>
+
+  <form id="assignmentForm">
+    <div class="mb-3">
+      <label for="fileInput" class="form-label">اختر ملف الوظيفة (PDF أو صورة):</label>
+      <input type="file" id="fileInput" class="form-control" accept=".pdf, image/*" required>
+    </div>
+    <button type="submit" class="btn btn-primary">رفع</button>
+  </form>
+
+  <div id="previewArea" class="mt-4">
+    <h5>المعاينة:</h5>
+    <div id="filePreview"></div>
+  </div>
+
+          </div>
+          <div class="tab-pane fade" id="tab2">
+            <!-- تبويب وظائف الأستاذ -->
+            <h3 class="mb-4"> وظائف المدرسين</h3>
+
+            <div class="card mb-3">
+              <div class="card-body">
+                <h5 class="card-title">وظيفة في مادة الرياضيات</h5>
+                <p class="card-text">حل التمارين من 1 إلى 5 من الصفحة 32.</p>
+                <p class="text-muted">تاريخ التسليم: 10-06-2025</p>
+                <a href="files/math_homework1.pdf" download class="btn btn-outline-primary btn-sm">
+                  تحميل الوظيفة
+                </a>
+              </div>
+            </div>
+
+            <div class="card mb-3">
+              <div class="card-body">
+                <h5 class="card-title">وظيفة في مادة العلوم</h5>
+                <p class="card-text">إعداد تقرير مختصر عن دورة الماء في الطبيعة.</p>
+                <p class="text-muted">تاريخ التسليم: 12-06-2025</p>
+                <!-- بدون ملف -->
+                <span class="text-muted">لا يوجد ملف مرفق</span>
+              </div>
+            </div>
+
+          </div>
+
+          </div>
+        </div>
+      </div>
+
+    <!-- قسم النماذج الامتحانية -->
+<div id="exams" class="section">
+  <div class="container">
+    <h3 class="mb-4">النماذج الامتحانية</h3>
+    <div class="card mb-3">
+      <div class="card-body">
+        <h5 class="card-title">نموذج الرياضيات - الفصل الأول</h5>
+        <p class="card-text">اختبار نهاية الفصل الأول لمادة الرياضيات:</p>
+        <p class="text-muted">تاريخ النشر: 01-06-2025</p>
+        <a href="files/math_exam1.pdf" download class="btn btn-outline-primary btn-sm">تحميل النموذج</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- start notes -->
+<div id="notes" class="section">
+  <div class="container">
+    <h3 class="mb-4">الملاحظات</h3>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h5 class="card-title">الموجه: أ. فاطمة الزهراء</h5>
+        <p class="card-text">يرجى مراجعة الدرس السابق جيدًا قبل الامتحان.</p>
+        <p class="text-muted">تاريخ الإضافة: 05-06-2025</p>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h5 class="card-title">المدرس: أ. محمد العلي</h5>
+        <p class="card-text">المحاضرة القادمة ستكون عن التكاملات.</p>
+        <p class="text-muted">تاريخ الإضافة: 07-06-2025</p>
+      </div>
+    </div>
+
+    <div class="card mb-3 border-info">
+      <div class="card-body">
+        <h5 class="card-title">ملاحظة شخصية للطالبة</h5>
+        <p class="card-text">يرجى الاهتمام بتحسين مهارات القراءة اليومية.</p>
+        <p class="text-muted">تاريخ الإضافة: 08-06-2025</p>
+      </div>
+    </div>
+  </div>
+</div>
+  </div>
+<!-- end notes -->
+
+  <!-- JavaScript -->
+  <script src="js/main.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

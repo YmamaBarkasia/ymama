@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>صفحة الموجه</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.rtl.min.css" rel="stylesheet" />
+    <style>
+        body {
+            background-color: #f8f9fa;
+            padding: 30px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2 class="text-center mb-4">صفحة المدرّس</h2>
+
+    <ul class="nav nav-tabs" id="teacherTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button
+                class="nav-link active"
+                id="exam-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#exam"
+                type="button"
+                role="tab"
+                aria-controls="exam"
+                aria-selected="true"
+            >رفع الدرجات الامتحانية</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button
+                class="nav-link"
+                id="note-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#note"
+                type="button"
+                role="tab"
+                aria-controls="note"
+                aria-selected="false"
+            >إضافة ملاحظة لطالب</button>
+        </li>
+    </ul>
+
+    <div class="tab-content" id="teacherTabsContent" style="margin-top: 20px;">
+        <div
+            class="tab-pane fade show active"
+            id="exam"
+            role="tabpanel"
+            aria-labelledby="exam-tab"
+        >
+            <h3 class="mb-4 mt-4">يمامة بركسية</h3>
+            <table class="table">
+                <thead class="table-light">
+                    <tr>
+                        <th>اسم المادة</th>
+                        <th>النشاط</th>
+                        <th>الوظائف</th>
+                        <th>المذاكرة</th>
+                        <th>الحالة</th>
+                        <th>الامتحان</th>
+                        <th>الحالة</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- كرر الصفوف حسب الحاجة -->
+                    <tr>
+                        <td>الرياضيات</td>
+                        <td style="max-width: 80px;">
+                            <input type="number" class="form-control form-control-sm" name="activity[]" min="0" max="100" />
+                        </td>
+                        <td style="max-width: 80px;">
+                            <input type="number" class="form-control form-control-sm" name="homework[]" min="0" max="100" />
+                        </td>
+                        <td style="max-width: 80px;">
+                            <input type="number" class="form-control form-control-sm" name="quiz[]" min="0" max="100" />
+                        </td>
+                        <td class="status"></td>
+                        <td style="max-width: 80px;">
+                            <input type="number" class="form-control form-control-sm" name="exam[]" min="0" max="100" />
+                        </td>
+                        <td class="status"></td>
+                    </tr>
+                    <tr>
+                        <td>الرياضيات</td>
+                        <td style="max-width: 80px;">
+                            <input type="number" class="form-control form-control-sm" name="activity[]" min="0" max="100" />
+                        </td>
+                        <td style="max-width: 80px;">
+                            <input type="number" class="form-control form-control-sm" name="homework[]" min="0" max="100" />
+                        </td>
+                        <td style="max-width: 80px;">
+                            <input type="number" class="form-control form-control-sm" name="quiz[]" min="0" max="100" />
+                        </td>
+                        <td class="status"></td>
+                        <td style="max-width: 80px;">
+                            <input type="number" class="form-control form-control-sm" name="exam[]" min="0" max="100" />
+                        </td>
+                        <td class="status"></td>
+                    </tr>
+                    <!-- أضف المزيد حسب الحاجة -->
+                </tbody>
+            </table>
+            <button class="btn btn-primary mt-3">حفظ الدرجات</button>
+        </div>
+
+        <div
+            class="tab-pane fade"
+            id="note"
+            role="tabpanel"
+            aria-labelledby="note-tab"
+        >
+            <div class="card p-4">
+                <form>
+                    <div class="mb-3">
+                        <label for="studentName" class="form-label">اسم الطالبة</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="studentName"
+                            placeholder="مثلاً: سارة أحمد"
+                        />
+                    </div>
+                    <div class="mb-3">
+                        <label for="noteText" class="form-label">الملاحظة</label>
+                        <textarea
+                            class="form-control"
+                            id="noteText"
+                            rows="3"
+                            placeholder="اكتب الملاحظة هنا..."
+                        ></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">إرسال الملاحظة</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function updateStatuses() {
+  const rows = document.querySelectorAll("tbody tr");
+  rows.forEach(row => {
+    const quizInput = row.querySelector('input[name="quiz[]"]');
+    const examInput = row.querySelector('input[name="exam[]"]');
+    const statusCells = row.querySelectorAll(".status");
+
+    const quizVal = quizInput && quizInput.value.trim() !== "" ? parseFloat(quizInput.value) : null;
+    const examVal = examInput && examInput.value.trim() !== "" ? parseFloat(examInput.value) : null;
+
+    // حالة المذاكرة (quiz)
+    if (quizVal === null || isNaN(quizVal)) {
+      statusCells[0].textContent = "-";
+      statusCells[0].className = "status text-muted";
+    } else {
+      statusCells[0].innerHTML = quizVal >= 40 
+        ? '<span class="text-success">✓</span>' 
+        : '<span class="text-danger">✗</span>';
+    }
+
+    // حالة الامتحان (exam)
+    if (examVal === null || isNaN(examVal)) {
+      statusCells[1].textContent = "-";
+      statusCells[1].className = "status text-muted";
+    } else {
+      statusCells[1].innerHTML = examVal >= 40 
+        ? '<span class="text-success">✓</span>' 
+        : '<span class="text-danger">✗</span>';
+    }
+  });
+}
+
+
+    // حدث الحالات عند تحميل الصفحة
+    updateStatuses();
+
+    // حدث الحالات كل ما تغير أي إدخال في حقول quiz أو exam
+    document.querySelectorAll('input[name="quiz[]"], input[name="exam[]"]').forEach((input) => {
+        input.addEventListener("input", updateStatuses);
+    });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOGIN</title>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="bootstrap/css/all.min.css">
+    <style>
+        .login {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: white;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid white;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(33, 51, 184, 0.4);
+            max-width: 900px;
+            width: 100%;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .img img {
+            width: 300px;
+            height: 300px;
+            border-radius: 15px;
+            object-fit: cover;
+            flex-shrink: 0; /* يمنع التقلص */
+        }
+
+        .main-btn {
+            justify-content: center;
+            width: 83%;
+            height: auto;
+        }
+
+        .main-btn:hover,
+        .main-btn:focus {
+            background-color: rgb(57, 225, 57);
+            border: none;
+        }
+
+        input {
+            box-sizing: border-box;
+        }
+
+        h3 {
+            white-space: nowrap;
+        }
+
+        #error {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .input-success {
+            background-color: lightgreen !important;
+        }
+
+        .input-error {
+            background-color: lightpink !important;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                background-color: white;
+                margin: 10px;
+                padding-bottom: 20px;
+            }
+
+            .img img {
+                border-radius: 50%;
+                width: 250px;
+                height: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login" id="login">
+        <div class="container p-2">
+            <div class="img m-3">
+                <img src="assest/image/copilot_image_1743686675023.jpeg" alt="" class="img-fluid border-0 flex-shrink-0">
+            </div>
+            <div class="row g-3 align-items-center">
+                <div class="text-center">
+                    <h3>تسجيل الدخول</h3>
+                </div>
+                <form id="loginForm" class="col-12">
+                    <div class="col-10 ms-4 mb-3">
+                        <input type="text" id="inputuser" class="form-control" placeholder="اسم المستخدم">
+                    </div>
+                    <div style="position: relative;" class="col-10 ms-4 mb-3">
+                        <input type="password" id="inputPassword6" class="form-control" placeholder="كلمة المرور">
+                        <button type="button" id="togglePassword" style="position: absolute; top: 50%; right: 10px; transform: translateY(-50%); background: none; border: none; cursor: pointer; color: #333;">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                    <button type="submit" class="btn rounded-pill btn-primary main-btn ms-4 mb-4" id="btn">تسجيل الدخول</button>
+                </form>
+                <p id="error"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        const togglePassword = document.getElementById('togglePassword');
+        const passwordInput = document.getElementById('inputPassword6');
+        const usernameInput = document.getElementById('inputuser');
+        const error = document.getElementById('error');
+
+        // تبديل عرض كلمة المرور
+        togglePassword.addEventListener('click', function () {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            this.innerHTML = type === 'password' ? '<i class="fas fa-eye"></i>' : '<i class="fas fa-eye-slash"></i>';
+        });
+
+        // دعم Enter
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('keypress', function (e) {
+                if (e.key === 'Enter') {
+                    document.querySelector('#loginForm').dispatchEvent(new Event('submit'));
+                }
+            });
+        });
+
+        // معالجة تسجيل الدخول
+        document.getElementById('loginForm').addEventListener('submit', function (e) {
+            e.preventDefault(); // منع إعادة التحميل
+
+            const user = usernameInput.value.trim();
+            const pass = passwordInput.value;
+
+            const validUsername = "ymama";
+            const validPassword = "12345";
+
+            // مسح الكلاسات السابقة
+            usernameInput.classList.remove('input-success', 'input-error');
+            passwordInput.classList.remove('input-success', 'input-error');
+
+            if (!user || !pass) {
+                error.textContent = 'يرجى إدخال اسم المستخدم وكلمة المرور';
+                error.style.color = 'red';
+                return;
+            }
+
+            if (user === validUsername && pass === validPassword) {
+                error.textContent = 'تم تسجيل الدخول بنجاح!';
+                error.style.color = 'green';
+                usernameInput.classList.add('input-success');
+                passwordInput.classList.add('input-success');
+                // يمكنك هنا إعادة التوجيه:
+                // window.location.href = 'dashboard.html';
+            } else {
+                error.textContent = 'اسم المستخدم أو كلمة المرور غير صحيحة';
+                error.style.color = 'red';
+                usernameInput.classList.add('input-error');
+                passwordInput.classList.add('input-error');
+            }
+        });
+    </script>
+
+    <script src="bootstrap/JS/bootstrap.bundle.min.js"></script>
+    <script src="bootstrap/JS/all.min.js"></script>
+</body>
+</html>
